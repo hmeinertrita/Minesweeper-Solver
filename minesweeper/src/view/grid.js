@@ -3,11 +3,23 @@ import Game from '../game/game.js';
 import './grid.css';
 
 function Square(props) {
-  return (
-    <button className="board__row__square" onClick={props.onClick}>
+  if (props.value === -1) {
+    return (
+      <button className="board__row__square flagged" onClick={props.onClick}>
+        <b>{"F"}</b>
+      </button>
+    );
+  }
+  else if (props.value === undefined) {
+    return (
+      <button className="board__row__square uncleared" onClick={props.onClick}></button>
+    );
+  }
+  else {
+    return (<button className="board__row__square cleared" onClick={props.onClick}>
       {props.value}
-    </button>
-  );
+    </button>)
+  }
 }
 
 class GridView extends Component {
@@ -27,12 +39,6 @@ class GridView extends Component {
       for (var j=0; j<this.state.game.dim; j++) {
         const idx = i*this.state.game.dim+j;
         var label = this.state.game.getNum(idx);
-        if (label === -1) {
-          label = 'F';
-        }
-        if (label === undefined) {
-          label = "";
-        }
         row.push(<Square key = {j} value = {label} onClick = {() => {
           this.setState({
             changed: true

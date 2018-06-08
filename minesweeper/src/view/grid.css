@@ -1,3 +1,8 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
 .board {
   align-items: center;
   display: flex;
@@ -10,11 +15,23 @@
 }
 
 .board__row__square {
-  background: #fff;
   border: 1px solid #999;
   font-size: 16px;
   height: 30px;
   padding: 0;
   text-align: center;
+  transition: background-color 0.5s;
   width: 30px;
+}
+
+.uncleared {
+  background-color: black;
+}
+
+.cleared {
+  background-color: white;
+}
+
+.flagged {
+  background-color: grey;
 }
