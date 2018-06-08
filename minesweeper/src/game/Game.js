@@ -93,7 +93,7 @@ class Game {
       const surroundings = this.getSurrounding(i);
       var count = 0;
       for (var j = 0; j < surroundings.length; j++) {
-        if (surroundings[j] in flags) {
+        if (flags[surroundings[j]]) {
           count++;
         }
       }
