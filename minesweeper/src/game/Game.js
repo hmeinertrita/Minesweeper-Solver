@@ -5,10 +5,6 @@ class Game {
     const cleared = {};
     const flags = {};
 
-    this.peek = (i) => {
-      return field[i];
-    }
-
     this.clear = (i) => {
       if (!(flags[i])) {
         if (field[i]) {
