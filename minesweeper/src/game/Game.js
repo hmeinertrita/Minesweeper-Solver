@@ -31,9 +31,13 @@ class Game {
     };
 
     this.flag = (i) => {
+
       if (i in cleared) {
         return;
       }
+      if (flags[i]) {console.log("unflagged " + i);}
+      else {console.log("flagged " + i);}
+
       flags[i]=!flags[i];
     };
 
@@ -47,6 +51,9 @@ class Game {
           }
         }
         return count;
+      }
+      else if (flags[i]) {
+        return -1;
       }
     };
 
@@ -119,6 +126,4 @@ class Game {
 
 }
 
-var game = new Game(4, 0.5);
-//0123
-//4567
+export default Game;
