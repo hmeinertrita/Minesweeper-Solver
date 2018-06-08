@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Game from '../game/game.js';
+import './grid.css';
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className="board__row__square" onClick={props.onClick}>
       {props.value}
     </button>
   );
@@ -20,12 +21,6 @@ class GridView extends Component {
   }
 
   render() {
-    //if (this.state.changed) {
-    //  this.setState({
-    //    changed: false
-    //  });
-    //}
-
     const board = [];
     for (var i=0; i<this.state.game.dim; i++) {
       const row = [];
@@ -36,7 +31,7 @@ class GridView extends Component {
           label = 'F';
         }
         if (label === undefined) {
-          label = " ";
+          label = "";
         }
         row.push(<Square key = {j} value = {label} onClick = {() => {
           this.setState({
@@ -50,7 +45,7 @@ class GridView extends Component {
           }
         }}/>);
       }
-      board.push(<div className="board-row" key={i}>{row}</div>)
+      board.push(<div className="board__row" key={i}>{row}</div>)
     }
 
     let status;
@@ -62,7 +57,7 @@ class GridView extends Component {
     }
 
     return (
-      <div className="Game">
+      <div className="board">
         {board}
         <button onClick = {() => {
           this.setState({

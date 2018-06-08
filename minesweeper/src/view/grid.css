@@ -1,0 +1,20 @@
+.board {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.board__row {
+  align-items: center;
+  display: flex;
+}
+
+.board__row__square {
+  background: #fff;
+  border: 1px solid #999;
+  font-size: 16px;
+  height: 30px;
+  padding: 0;
+  text-align: center;
+  width: 30px;
+}
