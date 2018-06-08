@@ -12,7 +12,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <GridView game = {(new Game(10, 0.2))} />
+        <GridView dim = {10} mine_factor={0.2} />
       </div>
     );
   }

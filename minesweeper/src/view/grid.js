@@ -10,6 +10,20 @@ function Square(props) {
       </button>
     );
   }
+  else if (props.value === -2) {
+    return (
+      <button className="board__row__square mine" onClick={props.onClick}>
+        <b>{"M"}</b>
+      </button>
+    );
+  }
+  else if (props.value === -3) {
+    return (
+      <button className="board__row__square incorrect" onClick={props.onClick}>
+        <b>{"X"}</b>
+      </button>
+    );
+  }
   else if (props.value === undefined) {
     return (
       <button className="board__row__square uncleared" onClick={props.onClick}></button>
@@ -26,7 +40,7 @@ class GridView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      game: this.props.game,
+      game: new Game(props.dim, props.mine_factor),
       clearing: true,
       changed: false,
     }
@@ -68,6 +82,13 @@ class GridView extends Component {
         <button onClick = {() => {
           this.setState({
             clearing: !this.state.clearing
+          });
+        }}>
+          {status}
+        </button>
+        <button onClick = {() => {
+          this.setState({
+            game: new Game(this.props.dim, this.props.mine_factor)
           });
         }}>
           {status}

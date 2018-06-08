@@ -5,20 +5,25 @@ class Game {
     const cleared = {};
     const flags = {};
 
+    var over = false;
+
     this.clear = (i) => {
-      if (!(flags[i])) {
-        if (field[i]) {
-          //TODO lose
-          console.log("lose!");
-        }
-        else {
-          cleared[i] = true;
-          console.log("cleared " + i);
-          if (this.getNum(i) === 0) {
-            const surroundings = this.getSurrounding(i);
-            for (var j = 0; j < surroundings.length; j++) {
-              if (!(surroundings[j] in cleared)) {
-                this.clear(surroundings[j]);
+      if (!over) {
+        if (!(flags[i])) {
+          if (field[i]) {
+            //TODO lose
+            over = true;
+            console.log("lose!");
+          }
+          else {
+            cleared[i] = true;
+            console.log("cleared " + i);
+            if (this.getNum(i) === 0) {
+              const surroundings = this.getSurrounding(i);
+              for (var j = 0; j < surroundings.length; j++) {
+                if (!(surroundings[j] in cleared)) {
+                  this.clear(surroundings[j]);
+                }
               }
             }
           }
@@ -27,18 +32,28 @@ class Game {
     };
 
     this.flag = (i) => {
+      if (!over) {
+        if (i in cleared) {
+          return;
+        }
+        if (flags[i]) {console.log("unflagged " + i);}
+        else {console.log("flagged " + i);}
 
-      if (i in cleared) {
-        return;
+        flags[i]=!flags[i];
       }
-      if (flags[i]) {console.log("unflagged " + i);}
-      else {console.log("flagged " + i);}
-
-      flags[i]=!flags[i];
     };
 
     this.getNum = (i) => {
-      if (cleared[i]) {
+      if (flags[i]) {
+        if (!field[i] && over) {
+          return -3;
+        }
+        return -1;
+      }
+      else if (cleared[i] || over) {
+        if (field[i]) {
+          return -2;
+        }
         const surroundings = this.getSurrounding(i);
         var count = 0;
         for (var j = 0; j < surroundings.length; j++) {
@@ -47,9 +62,6 @@ class Game {
           }
         }
         return count;
-      }
-      else if (flags[i]) {
-        return -1;
       }
     };
 
