@@ -91,7 +91,7 @@ class GridView extends Component {
             game: new Game(this.props.dim, this.props.mine_factor)
           });
         }}>
-          {status}
+          New Game
         </button>
       </div>
     );
