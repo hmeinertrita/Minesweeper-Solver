@@ -1,12 +1,10 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
-}
-
 .board {
+
   align-items: center;
   display: flex;
   flex-direction: column;
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
 }
 
 .board__row {
@@ -33,5 +31,9 @@ body {
 }
 
 .flagged {
-  background-color: grey;
+  background-color: #96ffad;
+}
+
+.incorrect {
+  background-color: #ff96a5;
 }

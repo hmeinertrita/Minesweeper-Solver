@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GridView from './view/grid.js';
-import Game from './game/game.js';
 import logo from './logo.svg';
 import './App.css';
 

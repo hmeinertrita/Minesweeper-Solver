@@ -20,7 +20,7 @@ function Square(props) {
   else if (props.value === -3) {
     return (
       <button className="board__row__square incorrect" onClick={props.onClick}>
-        <b>{"X"}</b>
+        <b>{"F"}</b>
       </button>
     );
   }

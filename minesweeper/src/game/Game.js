@@ -66,9 +66,9 @@ class Game {
     };
 
     this.print = () => {
-      const out = (field.map((val, i) => {
-        return this.getNum(i);
-      }));
+      //const out = (field.map((val, i) => {
+      //  return this.getNum(i);
+      //}));
       for (var i = 0; i < this.dim; i++) {
         var line = "";
         for (var j = 0; j < this.dim; j++) {
