@@ -15,10 +15,10 @@ class Game {
             over = true;
             console.log("lose!");
           }
-          else {
+          else if (!(i in cleared)){
             cleared[i] = true;
             console.log("cleared " + i);
-            if (this.getNum(i) === 0) {
+            if (this.getStatus(i) === 0) {
               const surroundings = this.getSurrounding(i);
               for (var j = 0; j < surroundings.length; j++) {
                 if (!(surroundings[j] in cleared)) {
@@ -30,6 +30,8 @@ class Game {
         }
       }
     };
+
+    this.isCleared = (i) => {return (i in cleared);};
 
     this.flag = (i) => {
       if (!over) {
@@ -43,7 +45,7 @@ class Game {
       }
     };
 
-    this.getNum = (i) => {
+    this.getStatus = (i) => {
       if (flags[i]) {
         if (!field[i] && over) {
           return -3;
@@ -65,9 +67,42 @@ class Game {
       }
     };
 
+    this.getStatus = (i) => {
+      if (flags[i]) {
+        if (!field[i] && over) {
+          return -3;
+        }
+        return -1;
+      }
+      else if (cleared[i] || over) {
+        if (field[i]) {
+          return -2;
+        }
+        const surroundings = this.getSurrounding(i);
+        var count = 0;
+        for (var j = 0; j < surroundings.length; j++) {
+          if (field[surroundings[j]]) {
+            count++;
+          }
+        }
+        return count;
+      }
+    };
+
+    this.getFlagsAround = (i) => {
+      const surroundings = this.getSurrounding(i);
+      var count = 0;
+      for (var j = 0; j < surroundings.length; j++) {
+        if (surroundings[j] in flags) {
+          count++;
+        }
+      }
+      return count;
+    };
+
     this.print = () => {
       //const out = (field.map((val, i) => {
-      //  return this.getNum(i);
+      //  return this.getStatus(i);
       //}));
       for (var i = 0; i < this.dim; i++) {
         var line = "";
@@ -75,7 +110,7 @@ class Game {
           if (i*dim+j in flags) {
             line = line + " F";
           }
-          line = line + (" " + this.getNum(i*dim+j));
+          line = line + (" " + this.getStatus(i*dim+j));
         }
         console.log(line);
       }

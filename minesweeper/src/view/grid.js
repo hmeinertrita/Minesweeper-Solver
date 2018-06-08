@@ -46,24 +46,33 @@ class GridView extends Component {
     }
   }
 
+  handleClick(i) {
+    console.log("clicked " + i);
+    this.setState({
+      changed: true
+    });
+    if (this.state.game.isCleared(i) && this.state.game.getFlagsAround(i) === this.state.game.getStatus(i)) {
+      const surroundings = this.state.game.getSurrounding(i);
+      for(var j = 0; j < surroundings.length; j++) {
+        this.state.game.clear(surroundings[j]);
+      }
+    }
+    else if (this.state.clearing) {
+      this.state.game.clear(i);
+    }
+    else {
+      this.state.game.flag(i);
+    }
+  }
+
   render() {
     const board = [];
     for (var i=0; i<this.state.game.dim; i++) {
       const row = [];
       for (var j=0; j<this.state.game.dim; j++) {
         const idx = i*this.state.game.dim+j;
-        var label = this.state.game.getNum(idx);
-        row.push(<Square key = {j} value = {label} onClick = {() => {
-          this.setState({
-            changed: true
-          });
-          if (this.state.clearing) {
-            this.state.game.clear(idx);
-          }
-          else {
-            this.state.game.flag(idx);
-          }
-        }}/>);
+        var label = this.state.game.getStatus(idx);
+        row.push(<Square key = {j} value = {label} onClick = {() => this.handleClick(idx)}/>);
       }
       board.push(<div className="board__row" key={i}>{row}</div>)
     }
