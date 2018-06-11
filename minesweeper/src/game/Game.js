@@ -45,26 +45,12 @@ class Game {
       }
     };
 
-    this.getStatus = (i) => {
-      if (flags[i]) {
-        if (!field[i] && over) {
-          return -3;
-        }
-        return -1;
+    this.getFlagCount = () => {
+      var count = 0;
+      for (var key in flags) {
+          count+=(flags[key] ? 1 : 0);
       }
-      else if (cleared[i] || over) {
-        if (field[i]) {
-          return -2;
-        }
-        const surroundings = this.getSurrounding(i);
-        var count = 0;
-        for (var j = 0; j < surroundings.length; j++) {
-          if (field[surroundings[j]]) {
-            count++;
-          }
-        }
-        return count;
-      }
+      return count;
     };
 
     this.getStatus = (i) => {

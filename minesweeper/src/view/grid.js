@@ -95,13 +95,17 @@ class GridView extends Component {
         }}>
           {status}
         </button>
-        <button onClick = {() => {
-          this.setState({
-            game: new Game(this.props.dim, this.props.mine_factor)
-          });
-        }}>
-          New Game
-        </button>
+        <div className="gameInfo">
+          <button onClick = {() => {
+            this.setState({
+              game: new Game(this.props.dim, this.props.mine_factor)
+            });
+          }}>
+            New Game
+          </button>
+
+          <div>{"Remaining Mines: "+(this.state.game.mine_count-this.state.game.getFlagCount())}</div>
+        </div>
       </div>
     );
   }
