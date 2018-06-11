@@ -1,13 +1,26 @@
 class Game {
 
   constructor(dim, mine_factor) {
-    const field = Array(dim*dim).fill(false);
+    this.dim = dim;
+    this.initialized = false;
+
+    var field = Array(this.dim*this.dim).fill(false);
     const cleared = {};
     const flags = {};
+
+    this.mine_count = Math.floor(field.length*mine_factor);
+    this.mine_count += this.mine_count===this.dim*this.dim ? -1 : 0;
 
     var over = false;
 
     this.clear = (i) => {
+      if (!this.initialized) {
+        field = this.initializeField(field, i, this.mine_count);
+        this.initialized = true;
+      }
+      if (i<0 || i>field.length) {
+        return;
+      }
       if (!over) {
         if (!(flags[i])) {
           if (field[i]) {
@@ -93,26 +106,14 @@ class Game {
       for (var i = 0; i < this.dim; i++) {
         var line = "";
         for (var j = 0; j < this.dim; j++) {
-          if (i*dim+j in flags) {
+          if (i*this.dim+j in flags) {
             line = line + " F";
           }
-          line = line + (" " + this.getStatus(i*dim+j));
+          line = line + (" " + this.getStatus(i*this.dim+j));
         }
         console.log(line);
       }
     };
-
-    this.dim = dim;
-    this.mine_count = Math.floor(field.length*mine_factor);
-
-
-    var indices = field.map((val, i) => {return i;});
-
-    for (var i = 0; i < this.mine_count; i++) {
-      const j = Math.floor(Math.random()*indices.length);
-      field[indices[j]] = true;
-      indices.splice(j, 1);
-    }
   }
 
   getSurrounding(i) {
@@ -148,8 +149,21 @@ class Game {
         out.push(surroundings[j]);
       }
     }
-
     return out;
+  }
+
+  initializeField(field, first, mine_count) {
+    const f = field.slice();
+  
+    var indices = f.map((val, i) => {return i;});
+    indices.splice(first, 1);
+
+    for (var i = 0; i < mine_count; i++) {
+      const j = Math.floor(Math.random()*indices.length);
+      f[indices[j]] = true;
+      indices.splice(j, 1);
+    }
+    return f;
   }
 
 

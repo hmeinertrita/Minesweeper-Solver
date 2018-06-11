@@ -40,7 +40,6 @@ class GridView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      game: new Game(props.dim, props.mine_factor),
       clearing: true,
       changed: false,
     }
@@ -51,27 +50,27 @@ class GridView extends Component {
     this.setState({
       changed: true
     });
-    if (this.state.game.isCleared(i) && this.state.game.getFlagsAround(i) === this.state.game.getStatus(i)) {
-      const surroundings = this.state.game.getSurrounding(i);
+    if (this.props.game.isCleared(i) && this.props.game.getFlagsAround(i) === this.props.game.getStatus(i)) {
+      const surroundings = this.props.game.getSurrounding(i);
       for(var j = 0; j < surroundings.length; j++) {
-        this.state.game.clear(surroundings[j]);
+        this.props.game.clear(surroundings[j]);
       }
     }
     else if (this.state.clearing) {
-      this.state.game.clear(i);
+      this.props.game.clear(i);
     }
     else {
-      this.state.game.flag(i);
+      this.props.game.flag(i);
     }
   }
 
   render() {
     const board = [];
-    for (var i=0; i<this.state.game.dim; i++) {
+    for (var i=0; i<this.props.game.dim; i++) {
       const row = [];
-      for (var j=0; j<this.state.game.dim; j++) {
-        const idx = i*this.state.game.dim+j;
-        var label = this.state.game.getStatus(idx);
+      for (var j=0; j<this.props.game.dim; j++) {
+        const idx = i*this.props.game.dim+j;
+        var label = this.props.game.getStatus(idx);
         row.push(<Square key = {j} value = {label} onClick = {() => this.handleClick(idx)}/>);
       }
       board.push(<div className="board__row" key={i}>{row}</div>)
@@ -96,15 +95,7 @@ class GridView extends Component {
           {status}
         </button>
         <div className="gameInfo">
-          <button onClick = {() => {
-            this.setState({
-              game: new Game(this.props.dim, this.props.mine_factor)
-            });
-          }}>
-            New Game
-          </button>
 
-          <div>{"Remaining Mines: "+(this.state.game.mine_count-this.state.game.getFlagCount())}</div>
         </div>
       </div>
     );
