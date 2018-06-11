@@ -95,7 +95,7 @@ class GridView extends Component {
           {status}
         </button>
         <div className="gameInfo">
-
+          {"Mines Remaining: " + (this.props.game.mine_count - this.props.game.getFlagCount())}
         </div>
       </div>
     );

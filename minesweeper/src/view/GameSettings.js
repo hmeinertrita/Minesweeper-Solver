@@ -12,14 +12,17 @@ class GameSettings extends Component {
   }
 
   updateDim(evt) {
+    var d = parseInt(evt.target.value);
     this.setState({
-      dim: parseInt(evt.target.value),
+      dim: d<0 ? 0:d,
     });
   }
 
   updateFactor(evt) {
+    var f = parseFloat(evt.target.value);
+    f = f>1 ? 1:f;
     this.setState({
-      factor: parseFloat(evt.target.value),
+      factor: f<0 ? 0:f,
     });
   }
 
@@ -32,12 +35,21 @@ class GameSettings extends Component {
 
         <div>
           Board Size:
-          <input onChange = {evt => {this.updateDim(evt)}} value = {this.state.dim} size = "6" type = "number"/>
+          <input
+            onChange = {evt => {this.updateDim(evt)}}
+            value = {this.state.dim}
+            type = "number"
+          />
         </div>
 
         <div>
           Mine Percentage (0 - 1):
-          <input onChange = {evt => {this.updateFactor(evt)}} value = {this.state.factor} size = "6" type = "number"/>
+          <input
+            onChange = {evt => {this.updateFactor(evt)}}
+            value = {this.state.factor}
+            size = "6"
+            type = "number"
+          />
         </div>
 
       </div>
