@@ -42,9 +42,11 @@ class Game {
           }
         }
       }
+      if (Object.keys(cleared).length+this.mine_count === this.dim*this.dim) {
+        over = true;
+        console.log("win!");
+      }
     };
-
-    this.isCleared = (i) => {return (i in cleared);};
 
     this.flag = (i) => {
       if (!over) {
@@ -106,14 +108,16 @@ class Game {
       for (var i = 0; i < this.dim; i++) {
         var line = "";
         for (var j = 0; j < this.dim; j++) {
-          if (i*this.dim+j in flags) {
-            line = line + " F";
-          }
-          line = line + (" " + this.getStatus(i*this.dim+j));
+          const s = this.getStatus(i*this.dim+j);
+          line = line + (" " + ((s!==undefined) ? s:"X"));
         }
         console.log(line);
       }
     };
+
+    this.isOver = () => {return over;};
+    this.isCleared = (i) => {return (i in cleared);};
+    this.isFlagged = (i) => {return (i in flags);};
   }
 
   getSurrounding(i) {
@@ -154,7 +158,7 @@ class Game {
 
   initializeField(field, first, mine_count) {
     const f = field.slice();
-  
+
     var indices = f.map((val, i) => {return i;});
     indices.splice(first, 1);
 
